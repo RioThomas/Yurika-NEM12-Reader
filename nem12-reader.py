@@ -1,4 +1,5 @@
 import os
+import traceback
 from os import walk, path
 
 import numpy as np
@@ -10,14 +11,13 @@ def startup():
     folders = ["input", "output", "processed"]
 
     print("""
- ███╗   ██╗███████╗███╗   ███╗       ██╗██████╗     ██████╗ ███████╗ █████╗ ██████╗ ███████╗██████╗ 
+ ███╗   ██╗███████╗███╗   ███╗       ██╗██████╗     ██████╗ ███████╗ █████╗ ██████╗ ███████╗██████╗
  ████╗  ██║██╔════╝████╗ ████║      ███║╚════██╗    ██╔══██╗██╔════╝██╔══██╗██╔══██╗██╔════╝██╔══██╗
  ██╔██╗ ██║█████╗  ██╔████╔██║█████╗╚██║ █████╔╝    ██████╔╝█████╗  ███████║██║  ██║█████╗  ██████╔╝
  ██║╚██╗██║██╔══╝  ██║╚██╔╝██║╚════╝ ██║██╔═══╝     ██╔══██╗██╔══╝  ██╔══██║██║  ██║██╔══╝  ██╔══██╗
  ██║ ╚████║███████╗██║ ╚═╝ ██║       ██║███████╗    ██║  ██║███████╗██║  ██║██████╔╝███████╗██║  ██║
- ╚═╝  ╚═══╝╚══════╝╚═╝     ╚═╝       ╚═╝╚══════╝    ╚═╝  ╚═╝╚══════╝╚═╝  ╚═╝╚═════╝ ╚══════╝╚═╝  ╚═╝
-""")
-    print(" By Rio Thomas.")
+ ╚═╝  ╚═══╝╚══════╝╚═╝     ╚═╝       ╚═╝╚══════╝    ╚═╝  ╚═╝╚══════╝╚═╝  ╚═╝╚═════╝ ╚══════╝╚═╝  ╚═╝""")
+    print(" By Rio Thomas.\n")
 
     for folder in folders:
         if not path.isdir(folder):
@@ -46,7 +46,12 @@ def process(folder_path):
 
     for file in nem12_file_list:
         file_path = folder_path + file
-        nmi, df = output_as_data_frames(file_path)[0]
+        try:
+            nmi, df = output_as_data_frames(file_path, ignore_missing_header=True)[0]
+        except ValueError as e:
+            print(traceback.format_exc())
+            continue
+
         df.insert(1, "Date", df["t_start"].dt.date)
         df.insert(2, "Time", df["t_start"].dt.time)
 
