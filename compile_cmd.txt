@@ -1,0 +1,1 @@
+pyinstaller --noconfirm --onefile --console --icon "C:/Users/rt099/PycharmProjects/Yurika-NEM12-Reader/icon.ico"  "C:/Users/rt099/PycharmProjects/Yurika-NEM12-Reader/nem12-reader.py"
