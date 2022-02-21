@@ -3,6 +3,20 @@
   <component name="CsvFileAttributes">
     <option name="attributeMap">
       <map>
+        <entry key="\examples\NEM12 Files\QCCC000298_99990047_20200201_20220131_20220203130911_Ergon_DETAILED.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="\input\QCCC000298_99990047_20200201_20220131_20220203130911_Ergon_DETAILED.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
         <entry key="\output\3033426490_load_profile.csv">
           <value>
             <Attribute>
@@ -11,6 +25,13 @@
           </value>
         </entry>
         <entry key="\output\3053093594_load_profile.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="\output\QCCC000298_load_profile.csv">
           <value>
             <Attribute>
               <option name="separator" value="," />

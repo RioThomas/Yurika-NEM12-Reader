@@ -48,7 +48,10 @@ def process(folder_path):
         file_path = folder_path + file
         try:
             nmi, df = output_as_data_frames(file_path, ignore_missing_header=True)[0]
-        except ValueError as e:
+            df = df.resample('30min', on="t_start").sum()  # Resample to 30 minute intervals.
+            df = df.reset_index()  # Re-add the "t_start" column after resample.
+            df[df.select_dtypes(include=['number']).columns] *= 2  # Multiply numbers by 2 to get kW from kWh.
+        except ValueError:
             print(traceback.format_exc())
             continue
 
@@ -71,8 +74,8 @@ def process(folder_path):
     for nmi, df in dfs.items():
         print(f"  |  {nmi} ({min(df['Date'])} to {max(df['Date'])})")
 
-        pv = pd.pivot_table(df, values='E1', index='Date', columns='Time', aggfunc=np.max)
-        pv.to_csv(f"output/{nmi}_load_profile.csv")
+        pv = pd.pivot_table(df, values='E1', index='Date', columns='Time', aggfunc=np.mean)
+        pv.to_csv(f"output/{nmi}_load_profile_kW.csv")
         pvs[nmi] = pv
 
 
